@@ -28,6 +28,11 @@ function UploadPage() {
     setIsLoading(true);
     setError(null);
 
+    // Clear previous results and chat history when uploading new image
+    setPredictions(null);
+    setSuggestions(null);
+    setChatHistory([]); // Clear chat history for new image
+
     const formData = new FormData();
     formData.append('file', image);
 

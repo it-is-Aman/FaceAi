@@ -90,7 +90,7 @@ def get_suggestions_from_chatgpt(predictions):
 
         client = openai.OpenAI()
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}]
         )
         return response.choices[0].message.content
@@ -168,7 +168,7 @@ Include relevant medical information, but remind the user to consult a healthcar
         # Get response from ChatGPT
         client = openai.OpenAI()
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}]
         )
         

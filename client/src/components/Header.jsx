@@ -11,7 +11,7 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center space-x-2">
             <Brain className="h-8 w-8 text-[#4A90E2]" />
-            <span className="text-xl font-bold text-[#283E4A]">SkinFace AI</span>
+            <span className="text-xl font-bold text-[#283E4A]">FaceCare AI</span>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
             <Link to="/" className="text-[#4A4A4A] hover:text-[#4A90E2]">

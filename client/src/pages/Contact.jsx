@@ -14,7 +14,7 @@ export default function Contact() {
               Contact Us
             </h1>
             <p className="text-xl text-[#4A4A4A] mb-8">
-              Have questions about our skin analysis technology? We're here to help!
+              Have questions about our face skin analysis technology? We're here to help!
             </p>
             
             <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -24,8 +24,8 @@ export default function Contact() {
                   For technical support or questions about your analysis results:
                 </p>
                 <p className="text-lg text-[#4A4A4A]">
-                  Email: support@skinfaceai.com<br />
-                  Hours: Monday-Friday, 9am-5pm PST
+                  Email: support@facecareai.com<br />
+                  Hours: Monday-Friday, 9am-5pm EST
                 </p>
               </div>
               <div>
@@ -34,15 +34,15 @@ export default function Contact() {
                   For partnerships, press, or general questions:
                 </p>
                 <p className="text-lg text-[#4A4A4A]">
-                  Email: info@skinfaceai.com<br />
-                  Phone: (555) 123-4567
+                  Email: info@facecareai.com<br />
+                  Phone: +91 1234567890
                 </p>
               </div>
             </div>
             
             <div className="text-center">
               <p className="text-xl text-[#4A4A4A] mb-6">
-                Ready to try our AI skin analysis?
+                Ready to try our AI Face skin analysis?
               </p>
               <Button 
                 className="bg-[#FF6F61] text-white hover:bg-[#FF6F61]/90 text-lg px-8 py-6"

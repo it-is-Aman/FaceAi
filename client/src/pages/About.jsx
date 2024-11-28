@@ -10,13 +10,13 @@ export default function About() {
       <section className="pt-24 pb-12 bg-gradient-to-b from-[#F5F5F5] to-white">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-[#283E4A] mb-4">
-            About SkinFace AI
+            About FaceCare AI
           </h1>
           <div className="grid md:grid-cols-2 gap-12 mt-8">
             <div>
               <h2 className="text-2xl font-semibold text-[#283E4A] mb-4">Our Mission</h2>
               <p className="text-lg text-[#4A4A4A] mb-6">
-                SkinFace AI combines cutting-edge artificial intelligence with dermatological expertise 
+                FaceCare AI combines cutting-edge artificial intelligence with dermatological expertise 
                 to provide accurate skin condition analysis and personalized recommendations. Our goal 
                 is to make professional skin analysis accessible to everyone.
               </p>
@@ -30,7 +30,7 @@ export default function About() {
                 className="bg-[#FF6F61] text-white hover:bg-[#FF6F61]/90 text-lg px-8 py-6"
                 onClick={() => navigate('/upload')}
               >
-                Try Skin Analysis
+                Try Face Analysis
               </Button>
             </div>
             <div className="space-y-6">
