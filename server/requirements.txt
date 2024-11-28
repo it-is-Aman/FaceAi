@@ -1,0 +1,6 @@
+flask
+flask-cors
+fastai
+pillow
+openai
+python-dotenv
