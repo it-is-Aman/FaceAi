@@ -6,6 +6,8 @@ from fastai.vision.all import *
 import pathlib
 from dotenv import load_dotenv
 import platform
+import cv2
+import numpy as np
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -34,6 +36,36 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+# Face detection configuration
+FACE_DETECTION_ENABLED = os.getenv('FACE_DETECTION_ENABLED', 'true').lower() == 'true'
+MIN_FACE_CONFIDENCE = float(os.getenv('MIN_FACE_CONFIDENCE', '0.8'))
+
+# Initialize face detection
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+def detect_face(image_path):
+    """
+    Detect if there is a face in the image and return True if found
+    """
+    try:
+        # Read the image
+        img = cv2.imread(image_path)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        
+        # Detect faces
+        faces = face_cascade.detectMultiScale(
+            gray,
+            scaleFactor=1.1,
+            minNeighbors=5,
+            minSize=(30, 30)
+        )
+        
+        # Return True if at least one face is detected
+        return len(faces) > 0
+    except Exception as e:
+        print(f"Error in face detection: {str(e)}")
+        return False
 
 # Prediction function
 def predict(image_path):
@@ -101,33 +133,39 @@ def get_suggestions_from_chatgpt(predictions):
 
 @app.route("/predict", methods=["POST"])
 def handle_predict():
-    print("Received prediction request")
-    
-    if "file" not in request.files:
-        return jsonify({"error": "No image uploaded"}), 400
-
-    image = request.files["file"]
-    if image.filename == "":
-        return jsonify({"error": "No selected file"}), 400
-
-    if not image or not allowed_file(image.filename):
-        return jsonify({"error": "Invalid file type. Please upload a JPG or PNG image"}), 400
-
     try:
-        # Save and process image
-        filename = secure_filename(image.filename)
-        image_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-        image.save(image_path)
+        if "file" not in request.files:
+            return jsonify({"error": "No file uploaded"}), 400
 
-        # Get predictions
-        predictions = predict(image_path)
+        file = request.files["file"]
+        if file.filename == "":
+            return jsonify({"error": "No file selected"}), 400
+
+        if not allowed_file(file.filename):
+            return jsonify({"error": "Invalid file type"}), 400
+
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        file.save(filepath)
+
+        # Check for face in image if enabled
+        if FACE_DETECTION_ENABLED:
+            has_face = detect_face(filepath)
+            if not has_face:
+                os.remove(filepath)  # Clean up the uploaded file
+                return jsonify({
+                    "error": "No face detected in the image. Please upload a clear image of a face."
+                }), 400
+
+        # Continue with existing prediction logic
+        predictions = predict(filepath)
         
         # Get treatment suggestions
         suggestions = get_suggestions_from_chatgpt(predictions) if predictions else ""
 
         # Cleanup
-        if os.path.exists(image_path):
-            os.remove(image_path)
+        if os.path.exists(filepath):
+            os.remove(filepath)
 
         return jsonify({
             "success": True,

@@ -4,3 +4,4 @@ fastai
 pillow
 openai
 python-dotenv
+opencv-python>=4.8.0
