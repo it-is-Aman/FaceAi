@@ -18,8 +18,8 @@ load_dotenv()
 # openai.api_key = os.getenv("OPENAI_API_KEY_FACECARE")    # fetch API from .env file
 openai.api_key = os.getenv("OPENAI_API_KEY")    # fetch API from environment variable
 
-# Print the OpenAI API key to verify it's loaded correctly
-print("Loaded OpenAI API Key:", openai.api_key)
+# # Print the OpenAI API key to verify it's loaded correctly
+# print("Loaded OpenAI API Key:", openai.api_key)
 
 # Configure platform-specific path handling
 plt = platform.system()
@@ -230,4 +230,5 @@ def secure_filename(filename):
     return filename
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=8000)
